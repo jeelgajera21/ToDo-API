@@ -121,5 +121,37 @@ namespace ToDo_API.Data
 
         }
         #endregion
+
+
+        #region GetUserByID
+        public List<UserModel> GetUserByID(int UserID)
+        {
+            UserModel User = new UserModel();
+            var user = new List<UserModel>();
+            string connectionString = this.configuration.GetConnectionString("ConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+            SqlCommand command = connection.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "PR_User_SelectByID";
+            command.Parameters.AddWithValue("@UserID", UserID);
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+            {
+                user.Add(new UserModel
+                {
+                    UserID = Convert.ToInt32(reader["UserID"]),
+                    UserName = (reader["UserName"].ToString()),
+                    Email = (reader["Email"].ToString()),
+                    CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
+                    IsActive = Convert.ToBoolean(reader["IsActive"])
+
+
+                });
+            }
+
+            return user;
+        }
+        #endregion
     }
 }

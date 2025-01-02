@@ -14,6 +14,8 @@ namespace ToDo_API.Controllers
         {
             this._UserRepository = userRepository;
         }
+
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -21,6 +23,16 @@ namespace ToDo_API.Controllers
             return Ok(user);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetUserByID(int id)
+        {
+            var user = _UserRepository.GetUserByID(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
 
         [HttpPost]
         public IActionResult AddUser(UserModel User)
