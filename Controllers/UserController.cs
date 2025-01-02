@@ -55,5 +55,19 @@ namespace ToDo_API.Controllers
         }
 
 
+
+        [HttpDelete]
+        public IActionResult DeleteUser(int UserID)
+        {
+
+            bool isinserted = _UserRepository.DeleteUser(UserID);
+            if (isinserted)
+            {
+                return Ok();
+            }
+            return StatusCode(500);
+        }
+
+
     }
 }

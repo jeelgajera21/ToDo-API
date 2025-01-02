@@ -98,5 +98,28 @@ namespace ToDo_API.Data
 
         }
         #endregion
+
+
+        #region DeleteUser
+        public bool DeleteUser(int UserID)
+        {
+            SqlConnection conn = new SqlConnection(this.configuration.GetConnectionString("ConnectionString"));
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("PR_User_Delete", conn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("UserID", UserID);
+
+            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        #endregion
     }
 }
