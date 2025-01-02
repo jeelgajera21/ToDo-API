@@ -17,7 +17,7 @@ namespace ToDo_API.Controllers
 
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAllUser()
         {
             var user = _UserRepository.GetAllUser();
             return Ok(user);
