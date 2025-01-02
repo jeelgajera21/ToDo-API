@@ -43,7 +43,60 @@ namespace ToDo_API.Data
 
             }
             return users;
-            #endregion
+
+            
         }
+        #endregion
+        #region AddUser
+        public bool AddUsers(UserModel userModel)
+        {
+            SqlConnection conn = new SqlConnection(this.configuration.GetConnectionString("ConnectionString"));
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("PR_User_Insert", conn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+           
+            cmd.Parameters.AddWithValue("UserName", userModel.UserName);
+            cmd.Parameters.AddWithValue("Email", userModel.Email);
+            cmd.Parameters.AddWithValue("PasswordHash", userModel.PasswordHash);
+
+
+
+            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        #endregion
+
+        #region EditUser
+        public bool EditUser(UserModel userModel)
+        {
+            SqlConnection conn = new SqlConnection(this.configuration.GetConnectionString("ConnectionString"));
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("PR_User_Update", conn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+
+            cmd.Parameters.AddWithValue("UserName", userModel.UserName);
+            cmd.Parameters.AddWithValue("Email", userModel.Email);
+            cmd.Parameters.AddWithValue("PasswordHash", userModel.PasswordHash);
+
+            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
+        #endregion
     }
 }

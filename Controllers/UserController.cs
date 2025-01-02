@@ -20,5 +20,21 @@ namespace ToDo_API.Controllers
             var user = _UserRepository.GetAllUser();
             return Ok(user);
         }
+
+
+        [HttpPost]
+        public IActionResult AddUser(UserModel User)
+        {
+            if (User == null)
+            {
+                return BadRequest();
+            }
+            bool isinserted = _UserRepository.AddUsers(User);
+            if (isinserted)
+            {
+                return Ok();
+            }
+            return StatusCode(500);
+        }
     }
 }
