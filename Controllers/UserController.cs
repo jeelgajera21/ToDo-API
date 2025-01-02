@@ -50,6 +50,19 @@ namespace ToDo_API.Controllers
         }
 
 
+        [HttpPost("login")]
+        public IActionResult Login(UserLoginRequest request)
+        {
+            var user = _UserRepository.Login(request);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
+
+
 
         [HttpPut]
         public IActionResult UpdateUser(UserModel User)
@@ -59,6 +72,36 @@ namespace ToDo_API.Controllers
                 return BadRequest();
             }
             bool isinserted = _UserRepository.UpdateUser(User);
+            if (isinserted)
+            {
+                return Ok();
+            }
+            return StatusCode(500);
+        }
+
+        [HttpPut("active")]
+        public IActionResult UserActive(int UserID)
+        {
+            if (UserID == null)
+            {
+                return BadRequest();
+            }
+            bool isinserted = _UserRepository.UserActive(UserID);
+            if (isinserted)
+            {
+                return Ok();
+            }
+            return StatusCode(500);
+        }
+
+        [HttpPut("inactive")]
+        public IActionResult UserInActive(int UserID)
+        {
+            if (UserID == null)
+            {
+                return BadRequest();
+            }
+            bool isinserted = _UserRepository.UserInActive(UserID);
             if (isinserted)
             {
                 return Ok();
@@ -81,5 +124,8 @@ namespace ToDo_API.Controllers
         }
 
 
-    }
+        
+    
+
+}
 }
