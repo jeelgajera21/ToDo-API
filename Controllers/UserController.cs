@@ -36,5 +36,24 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+
+
+
+        [HttpPut]
+        public IActionResult UpdateUser(UserModel User)
+        {
+            if (User == null)
+            {
+                return BadRequest();
+            }
+            bool isinserted = _UserRepository.UpdateUser(User);
+            if (isinserted)
+            {
+                return Ok();
+            }
+            return StatusCode(500);
+        }
+
+
     }
 }

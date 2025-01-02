@@ -73,18 +73,18 @@ namespace ToDo_API.Data
         }
         #endregion
 
-        #region EditUser
-        public bool EditUser(UserModel userModel)
+        #region UpdateUser
+        public bool UpdateUser(UserModel userModel)
         {
             SqlConnection conn = new SqlConnection(this.configuration.GetConnectionString("ConnectionString"));
             conn.Open();
             SqlCommand cmd = new SqlCommand("PR_User_Update", conn);
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
-
+            cmd.Parameters.AddWithValue("UserID", userModel.UserID);
             cmd.Parameters.AddWithValue("UserName", userModel.UserName);
-            cmd.Parameters.AddWithValue("Email", userModel.Email);
-            cmd.Parameters.AddWithValue("PasswordHash", userModel.PasswordHash);
+            cmd.Parameters.AddWithValue("Email", userModel.Email);/*
+            cmd.Parameters.AddWithValue("PasswordHash", userModel.PasswordHash);*/
 
             if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
             {
