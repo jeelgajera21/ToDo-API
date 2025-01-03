@@ -61,5 +61,34 @@ namespace ToDo_API.Controllers
             return StatusCode(500);
         }
 
+        [HttpPut]
+        public IActionResult UpdateTask(TaskModel Task)
+        {
+            if (Task == null)
+            {
+                return BadRequest();
+            }
+            bool isinserted = _TaskRepository.UpdateTask(Task);
+            if (isinserted)
+            {
+                return Ok();
+            }
+            return StatusCode(500);
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteTask(int TaskID)
+        {
+
+            bool isinserted = _TaskRepository.DeleteTask(TaskID);
+            if (isinserted)
+            {
+                return Ok();
+            }
+            return StatusCode(500);
+        }
+
+
+
     }
 }

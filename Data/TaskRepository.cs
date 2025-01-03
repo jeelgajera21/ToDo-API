@@ -149,7 +149,60 @@ namespace ToDo_API.Data
             }
 
         }
-       
+
+        #endregion
+
+        #region UpdateTask
+        public bool UpdateTask(TaskModel taskModel)
+        {
+            SqlConnection conn = new SqlConnection(this.configuration.GetConnectionString("ConnectionString"));
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("PR_Tasks_Update", conn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("TaskID", taskModel.TaskID);
+            cmd.Parameters.AddWithValue("Title", taskModel.Title);
+            cmd.Parameters.AddWithValue("Description", taskModel.Description);
+            cmd.Parameters.AddWithValue("DueDate", taskModel.DueDate);
+            cmd.Parameters.AddWithValue("Priority", taskModel.Priority);
+            cmd.Parameters.AddWithValue("Status", taskModel.Status);
+            cmd.Parameters.AddWithValue("CategoryID", taskModel.CategoryID);
+
+
+
+            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
+        #endregion
+
+        #region DeleteTask
+        public bool DeleteTask(int TaskId)
+        {
+            SqlConnection conn = new SqlConnection(this.configuration.GetConnectionString("ConnectionString"));
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("PR_Tasks_Delete", conn);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("TaskID", TaskId);
+
+            if (Convert.ToBoolean(cmd.ExecuteNonQuery()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
         #endregion
     }
 }
