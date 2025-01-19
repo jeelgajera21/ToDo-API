@@ -5,7 +5,7 @@ using ToDo_API.Models;
 
 namespace ToDo_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
     {
