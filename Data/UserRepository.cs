@@ -49,10 +49,10 @@ namespace ToDo_API.Data
         #endregion
 
         #region GetUserByID
-        public List<UserModel> GetUserByID(int UserID)
+        public UserModel GetUserByID(int UserID)
         {
             UserModel User = new UserModel();
-            var user = new List<UserModel>();
+           
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -63,7 +63,7 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
-                user.Add(new UserModel
+                User =new UserModel
                 {
                     UserID = Convert.ToInt32(reader["UserID"]),
                     UserName = (reader["UserName"].ToString()),
@@ -72,10 +72,10 @@ namespace ToDo_API.Data
                     IsActive = Convert.ToBoolean(reader["IsActive"])
 
 
-                });
+                };
             }
 
-            return user;
+            return User;
         }
         #endregion
 
@@ -106,10 +106,9 @@ namespace ToDo_API.Data
         #endregion
 
         #region Login
-        public List<UserLoginResponse> Login(UserLoginRequest userLoginRequest)
+        public UserLoginResponse Login(UserLoginRequest userLoginRequest)
         {
-            UserLoginRequest User = new UserLoginRequest();
-            var user = new List<UserLoginResponse>();
+            UserLoginResponse UserLogin = new UserLoginResponse();
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -122,7 +121,7 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
-                user.Add(new UserLoginResponse
+                UserLogin = new UserLoginResponse
                 {
                     UserID = Convert.ToInt32(reader["UserID"]),
                     UserName = (reader["UserName"].ToString()),
@@ -131,10 +130,10 @@ namespace ToDo_API.Data
                     IsActive = Convert.ToBoolean(reader["IsActive"])
 
 
-                });
+                };
             }
 
-            return user;
+            return UserLogin;
         }
         #endregion
 
