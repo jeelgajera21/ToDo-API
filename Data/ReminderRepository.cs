@@ -41,10 +41,10 @@ namespace ToDo_API.Data
         #endregion
 
         #region GetReminderByID
-        public List<ReminderModel> GetReminderByID(int ReminderID)
+        public ReminderModel GetReminderByID(int ReminderID)
         {
             ReminderModel Reminder = new ReminderModel();
-            var reminder = new List<ReminderModel>();
+
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -55,26 +55,25 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
-                reminder.Add(new ReminderModel
+                Reminder = new ReminderModel
                 {
-                    ReminderID = Convert.ToInt32(reader["TaskID"]),
-                    TaskID = Convert.ToInt32(reader["UserID"]),
+                    ReminderID = Convert.ToInt32(reader["ReminderID"]),
+                    TaskID = Convert.ToInt32(reader["TaskID"]),
                     ReminderTime = Convert.ToDateTime(reader["ReminderTime"]),
                     IsSent = Convert.ToBoolean(reader["IsSent"])
 
 
-                });
+                };
             }
 
-            return reminder;
+            return Reminder;
         }
         #endregion
 
         #region GetReminderByTaskID
-        public List<ReminderModel> GetReminderByTaskID(int TaskID)
+        public ReminderModel GetReminderByTaskID(int TaskID)
         {
             ReminderModel Reminder = new ReminderModel();
-            var reminder = new List<ReminderModel>();
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -85,7 +84,36 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                reminder.Add(new ReminderModel
+                Reminder = new ReminderModel
+                {
+                    ReminderID = Convert.ToInt32(reader["ReminderID"]),
+                    ReminderTime = Convert.ToDateTime(reader["ReminderTime"]),
+                    IsSent = Convert.ToBoolean(reader["IsSent"])
+
+
+                };
+            }
+
+            return Reminder;
+        }
+        #endregion
+
+        #region GetReminderByUserID
+        public List<ReminderModel> GetReminderByUserID(int UserID)
+        {
+            ReminderModel Reminder = new ReminderModel();
+            var reminders = new List<ReminderModel>();
+            string connectionString = this.configuration.GetConnectionString("ConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+            SqlCommand command = connection.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "PR_Reminder_GetRemindersByUser";
+            command.Parameters.AddWithValue("@UserID", UserID);
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                reminders.Add( new ReminderModel
                 {
                     ReminderID = Convert.ToInt32(reader["ReminderID"]),
                     ReminderTime = Convert.ToDateTime(reader["ReminderTime"]),
@@ -95,8 +123,35 @@ namespace ToDo_API.Data
                 });
             }
 
-            return reminder;
+            return reminders;
         }
+
+        /*public List<ReminderModel> GetAllReminder()
+                {
+                    
+                    ReminderModel reminder = new ReminderModel();
+
+                    string connectionString = this.configuration.GetConnectionString("ConnectionString");
+                    SqlConnection connection = new SqlConnection(connectionString);
+                    connection.Open();
+                    SqlCommand command = connection.CreateCommand();
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.CommandText = "PR_Reminders_SelectAll";
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        reminders.Add(new ReminderModel()
+                        {
+                            ReminderID = Convert.ToInt32(reader["ReminderID"]),
+                            TaskID = Convert.ToInt32(reader["TaskID"]),
+                            ReminderTime = Convert.ToDateTime(reader["ReminderTime"]),
+                            IsSent = Convert.ToBoolean(reader["IsSent"])
+                        });
+
+                    }
+                    return reminders;
+                }*/
         #endregion
 
         #region AddReminder

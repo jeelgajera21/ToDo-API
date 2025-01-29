@@ -45,10 +45,10 @@ namespace ToDo_API.Data
         #endregion
 
         #region GetCategoryByID
-        public List<CategoryModel> GetCategoryByID(int CategoryID)
+        public CategoryModel GetCategoryByID(int CategoryID)
         {
-            CategoryModel Task = new CategoryModel();
-            var category = new List<CategoryModel>();
+            CategoryModel Category = new CategoryModel();
+
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -59,7 +59,7 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
-                category.Add(new CategoryModel
+                Category = new CategoryModel
                 {
 
                     CategoryID = Convert.ToInt32(reader["CategoryID"]),
@@ -69,18 +69,17 @@ namespace ToDo_API.Data
                     CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
 
 
-                });
+                };
             }
 
-            return category;
+            return Category;
         }
         #endregion
 
         #region GetCategoryByUserID
-        public List<CategoryModel> GetCategoryByUserID(int UserID)
+        public CategoryModel GetCategoryByUserID(int UserID)
         {
             CategoryModel Category = new CategoryModel();
-            var category = new List<CategoryModel>();
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -91,7 +90,7 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                category.Add(new CategoryModel
+                Category = new CategoryModel
                 {
                     CategoryID = Convert.ToInt32(reader["CategoryID"]),
                     CategoryName = reader["CategoryName"].ToString(),
@@ -100,10 +99,10 @@ namespace ToDo_API.Data
 
 
 
-                });
+                };
             }
 
-            return category;
+            return Category;
         }
         #endregion
 

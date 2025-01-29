@@ -45,6 +45,18 @@ namespace ToDo_API.Controllers
             }
             return Ok(reminder);
         }
+        [HttpGet("by-user/{userid}")]
+        /*[Route("userid")]*/
+
+        public IActionResult GetReminderByUserID(int userid)
+        {
+            var reminder = _ReminderRepository.GetReminderByUserID(userid);
+            if (reminder == null)
+            {
+                return NotFound();
+            }
+            return Ok(reminder);
+        }
 
 
         [HttpPost]

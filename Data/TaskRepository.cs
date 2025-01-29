@@ -49,10 +49,9 @@ namespace ToDo_API.Data
         #endregion
 
         #region GetTaskByID
-        public List<TaskModel> GetTaskByID(int TaskID)
+        public TaskModel GetTaskByID(int TaskID)
         {
             TaskModel Task = new TaskModel();
-            var task = new List<TaskModel>();
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -63,7 +62,7 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
-                task.Add(new TaskModel
+                Task = new TaskModel
                 {
                     TaskID = Convert.ToInt32(reader["TaskID"]),
                     UserID = Convert.ToInt32(reader["UserID"]),
@@ -77,18 +76,18 @@ namespace ToDo_API.Data
                     UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
 
 
-                });
+                };
             }
 
-            return task;
+            return Task;
         }
         #endregion
 
         #region GetTaskByUserID
-        public List<TaskModel> GetTaskByUserID(int UserID)
+        public TaskModel GetTaskByUserID(int UserID)
         {
             TaskModel Task = new TaskModel();
-            var task = new List<TaskModel>();
+
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -99,7 +98,7 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                task.Add(new TaskModel
+                Task = new TaskModel
                 {
                     TaskID = Convert.ToInt32(reader["TaskID"]),
                     UserID =  Convert.ToInt32(reader["UserID"]) ,
@@ -114,10 +113,10 @@ namespace ToDo_API.Data
                     UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
 
 
-                });
+                };
             }
 
-            return task;
+            return Task;
         }
         #endregion
 
