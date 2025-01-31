@@ -77,9 +77,10 @@ namespace ToDo_API.Data
         #endregion
 
         #region GetCategoryByUserID
-        public CategoryModel GetCategoryByUserID(int UserID)
+        public List<CategoryModel> GetCategoryByUserID(int UserID)
         {
             CategoryModel Category = new CategoryModel();
+            var categories = new List<CategoryModel>();
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -90,19 +91,20 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                Category = new CategoryModel
+                categories.Add( new CategoryModel
                 {
                     CategoryID = Convert.ToInt32(reader["CategoryID"]),
+                    UserID = Convert.ToInt32(reader["UserID"]),
                     CategoryName = reader["CategoryName"].ToString(),
                     Description = reader["Description"].ToString(),
                     CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
 
 
 
-                };
+                });
             }
 
-            return Category;
+            return categories;
         }
         #endregion
 

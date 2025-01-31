@@ -71,9 +71,10 @@ namespace ToDo_API.Data
         #endregion
 
         #region GetReminderByTaskID
-        public ReminderModel GetReminderByTaskID(int TaskID)
+        public List<ReminderModel> GetReminderByTaskID(int TaskID)
         {
             ReminderModel Reminder = new ReminderModel();
+            var reminders = new List<ReminderModel>();
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
@@ -84,17 +85,18 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                Reminder = new ReminderModel
+                reminders.Add(new ReminderModel
                 {
                     ReminderID = Convert.ToInt32(reader["ReminderID"]),
+                    TaskID = Convert.ToInt32(reader["TaskID"]),
                     ReminderTime = Convert.ToDateTime(reader["ReminderTime"]),
                     IsSent = Convert.ToBoolean(reader["IsSent"])
 
 
-                };
+                });
             }
 
-            return Reminder;
+            return reminders;
         }
         #endregion
 
@@ -116,6 +118,7 @@ namespace ToDo_API.Data
                 reminders.Add( new ReminderModel
                 {
                     ReminderID = Convert.ToInt32(reader["ReminderID"]),
+                    TaskID = Convert.ToInt32(reader["TaskID"]),
                     ReminderTime = Convert.ToDateTime(reader["ReminderTime"]),
                     IsSent = Convert.ToBoolean(reader["IsSent"])
 

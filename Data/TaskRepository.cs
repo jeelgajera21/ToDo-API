@@ -84,9 +84,11 @@ namespace ToDo_API.Data
         #endregion
 
         #region GetTaskByUserID
-        public TaskModel GetTaskByUserID(int UserID)
+        public List<TaskModel> GetTaskByUserID(int UserID)
         {
-            TaskModel Task = new TaskModel();
+           
+            var tasks = new List<TaskModel>();
+            TaskModel task = new TaskModel();
 
             string connectionString = this.configuration.GetConnectionString("ConnectionString");
             SqlConnection connection = new SqlConnection(connectionString);
@@ -98,11 +100,10 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                Task = new TaskModel
+                tasks.Add(new TaskModel()
                 {
                     TaskID = Convert.ToInt32(reader["TaskID"]),
-                    UserID =  Convert.ToInt32(reader["UserID"]) ,
-
+                    UserID = Convert.ToInt32(reader["UserID"]),
                     Title = reader["Title"].ToString(),
                     Description = reader["Description"].ToString(),
                     DueDate = Convert.ToDateTime(reader["DueDate"]),
@@ -112,16 +113,15 @@ namespace ToDo_API.Data
                     CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                     UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
 
+                });
 
-                };
             }
-
-            return Task;
+            return tasks;
         }
         #endregion
 
         #region AddTask
-        
+
         public bool AddTask(TaskModel taskModel)
         {
             SqlConnection conn = new SqlConnection(this.configuration.GetConnectionString("ConnectionString"));

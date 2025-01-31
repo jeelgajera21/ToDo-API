@@ -1,5 +1,8 @@
+using System.Reflection;
 using ToDo_API.Data;
-
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using System.Reflection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,6 +16,10 @@ builder.Services.AddScoped<CategoryRepository>();
 builder.Services.AddScoped<ReminderRepository>();
 builder.Services.AddScoped<TaskRepository>();
 
+
+// Register FluentValidation (Scan the Validators folder dynamically)
+builder.Services.AddFluentValidationAutoValidation(); // Enables automatic validation
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); // Registers all validators in the project
 
 
 

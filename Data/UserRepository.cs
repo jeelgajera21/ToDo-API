@@ -34,8 +34,9 @@ namespace ToDo_API.Data
                 {
                     UserID = Convert.ToInt32(reader["UserID"]),
                     UserName = (reader["UserName"].ToString()),
-                    Email = (reader["Email"].ToString()),
-                   // PasswordHash = (reader["PasswordHash"].ToString()),
+                    Name = (reader["Name"].ToString()),
+                    Email = (reader["Email"].ToString()),/*
+                    PasswordHash = (reader["PasswordHash"].ToString()),*/
                     CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                     IsActive = Convert.ToBoolean(reader["IsActive"])
 
@@ -66,6 +67,7 @@ namespace ToDo_API.Data
                 User =new UserModel
                 {
                     UserID = Convert.ToInt32(reader["UserID"]),
+                    Name = (reader["Name"].ToString()),
                     UserName = (reader["UserName"].ToString()),
                     Email = (reader["Email"].ToString()),
                     CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
@@ -90,6 +92,7 @@ namespace ToDo_API.Data
             cmd.Parameters.AddWithValue("UserName", userModel.UserName);
             cmd.Parameters.AddWithValue("Email", userModel.Email);
             cmd.Parameters.AddWithValue("PasswordHash", userModel.PasswordHash);
+            cmd.Parameters.AddWithValue("Name", userModel.Name);
 
 
 
@@ -126,7 +129,7 @@ namespace ToDo_API.Data
                     UserID = Convert.ToInt32(reader["UserID"]),
                     UserName = (reader["UserName"].ToString()),
                     Email = (reader["Email"].ToString()),
-
+                    Name = (reader["Name"].ToString()),
                     IsActive = Convert.ToBoolean(reader["IsActive"])
 
 
@@ -146,6 +149,7 @@ namespace ToDo_API.Data
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
             cmd.Parameters.AddWithValue("UserID", userModel.UserID);
+            cmd.Parameters.AddWithValue("Name", userModel.Name);
             cmd.Parameters.AddWithValue("UserName", userModel.UserName);
             cmd.Parameters.AddWithValue("Email", userModel.Email);/*
             cmd.Parameters.AddWithValue("PasswordHash", userModel.PasswordHash);*/

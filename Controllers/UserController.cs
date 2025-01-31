@@ -35,6 +35,7 @@ namespace ToDo_API.Controllers
         }
 
         [HttpPost]
+        [Route("register")]
         public IActionResult AddUser(UserModel User)
         {
             if (User == null)
