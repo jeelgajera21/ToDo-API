@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
 using ToDo_API.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace ToDo_API.Data
 {
@@ -186,5 +187,40 @@ namespace ToDo_API.Data
 
         }
         #endregion
+
+        #region CategoryDropDownByUser
+
+        public List<CategoryDropDownByUser> GetCategoryDropDownByUser(int UserID)
+        {
+
+
+            string connectionString = this.configuration.GetConnectionString("ConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+            SqlCommand command = connection.CreateCommand();
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandText = "[PR_Categories_DropDownByUser]";
+            command.Parameters.AddWithValue("@UserID", UserID);
+            SqlDataReader reader1 = command.ExecuteReader();
+
+
+
+            DataTable dataTable1 = new DataTable();
+            dataTable1.Load(reader1);
+            List<CategoryDropDownByUser> categoryList = new List<CategoryDropDownByUser>();
+            foreach (DataRow data in dataTable1.Rows)
+            {
+                CategoryDropDownByUser catDDModel = new CategoryDropDownByUser();
+                catDDModel.CategoryName = data["CategoryName"].ToString();
+                catDDModel.CategoryID = Convert.ToInt32(data["CategoryID"]);
+                categoryList.Add(catDDModel);
+            }
+            //ViewBag.UserList = userList;
+            return categoryList;
+        }
+
+
+        #endregion
+
     }
 }

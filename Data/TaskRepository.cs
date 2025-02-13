@@ -109,7 +109,8 @@ namespace ToDo_API.Data
                     DueDate = Convert.ToDateTime(reader["DueDate"]),
                     Priority = Convert.ToInt32(reader["Priority"]),
                     Status = reader["Status"].ToString(),
-                    CategoryID = Convert.ToInt32(reader["CategoryID"]),
+                    CategoryName = reader["CategoryName"].ToString(),
+
                     CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
                     UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
 
@@ -134,6 +135,8 @@ namespace ToDo_API.Data
             cmd.Parameters.AddWithValue("Description", taskModel.Description);
             cmd.Parameters.AddWithValue("DueDate", taskModel.DueDate);
             cmd.Parameters.AddWithValue("Priority", taskModel.Priority);
+            cmd.Parameters.AddWithValue("CategoryID", taskModel.CategoryID);
+            
            
 
 
@@ -202,6 +205,40 @@ namespace ToDo_API.Data
             }
 
         }
+        #endregion
+
+        #region TaskDropDownByUser
+
+        public List<TaskDropDownByUser> GetTaskDropDownByUser(int UserID)
+        {
+
+
+            string connectionString = this.configuration.GetConnectionString("ConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+            SqlCommand command = connection.CreateCommand();
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandText = "[PR_Task_DropDownByUser]";
+            command.Parameters.AddWithValue("@UserID", UserID);
+            SqlDataReader reader1 = command.ExecuteReader();
+
+
+
+            DataTable dataTable1 = new DataTable();
+            dataTable1.Load(reader1);
+            List<TaskDropDownByUser> taskList = new List<TaskDropDownByUser>();
+            foreach (DataRow data in dataTable1.Rows)
+            {
+                TaskDropDownByUser taskDDModel = new TaskDropDownByUser();
+                taskDDModel.Title = data["Title"].ToString();
+                taskDDModel.TaskID = Convert.ToInt32(data["TaskID"]);
+                taskList.Add(taskDDModel);
+            }
+            //ViewBag.UserList = userList;
+            return taskList;
+        }
+
+
         #endregion
     }
 }

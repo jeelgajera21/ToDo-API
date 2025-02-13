@@ -44,6 +44,18 @@ namespace ToDo_API.Controllers
             }
             return Ok(category);
         }
+        [HttpGet("dd-by-user/{userid}")]
+        /*[Route("userid")]*/
+        public IActionResult GetCatDDByUserID(int userid)
+        {
+            var category = _CategoryRepository.GetCategoryDropDownByUser(userid);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return Ok(category);
+        }
+
 
         [HttpPost]
         public IActionResult AddTask(CategoryModel Category)

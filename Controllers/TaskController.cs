@@ -61,6 +61,19 @@ namespace ToDo_API.Controllers
             return StatusCode(500);
         }
 
+        [HttpGet("dd-by-user/{userid}")]
+        /*[Route("userid")]*/
+        public IActionResult GetCatDDByUserID(int userid)
+        {
+            var task = _TaskRepository.GetTaskDropDownByUser(userid);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            return Ok(task);
+        }
+
+
         [HttpPut]
         public IActionResult UpdateTask(TaskModel Task)
         {

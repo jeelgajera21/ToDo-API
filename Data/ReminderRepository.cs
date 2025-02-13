@@ -59,6 +59,7 @@ namespace ToDo_API.Data
                 {
                     ReminderID = Convert.ToInt32(reader["ReminderID"]),
                     TaskID = Convert.ToInt32(reader["TaskID"]),
+                    Title = reader["Title"].ToString(),
                     ReminderTime = Convert.ToDateTime(reader["ReminderTime"]),
                     IsSent = Convert.ToBoolean(reader["IsSent"])
 
@@ -89,6 +90,7 @@ namespace ToDo_API.Data
                 {
                     ReminderID = Convert.ToInt32(reader["ReminderID"]),
                     TaskID = Convert.ToInt32(reader["TaskID"]),
+                    
                     ReminderTime = Convert.ToDateTime(reader["ReminderTime"]),
                     IsSent = Convert.ToBoolean(reader["IsSent"])
 
@@ -119,6 +121,7 @@ namespace ToDo_API.Data
                 {
                     ReminderID = Convert.ToInt32(reader["ReminderID"]),
                     TaskID = Convert.ToInt32(reader["TaskID"]),
+                    Title = reader["Title"].ToString(),
                     ReminderTime = Convert.ToDateTime(reader["ReminderTime"]),
                     IsSent = Convert.ToBoolean(reader["IsSent"])
 
