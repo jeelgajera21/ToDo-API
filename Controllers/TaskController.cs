@@ -9,19 +9,24 @@ namespace ToDo_API.Controllers
     [ApiController]
     public class TaskController : ControllerBase
     {
+        #region Constructor Dependency Injection
         private readonly TaskRepository _TaskRepository;
         public TaskController(TaskRepository taskRepository)
         {
             this._TaskRepository = taskRepository;
         }
+        #endregion
 
+        #region GetAllTask
         [HttpGet]
         public IActionResult GetAllTask()
         {
             var user = _TaskRepository.GetAllTasks();
             return Ok(user);
         }
+        #endregion
 
+        #region GetTaskByID
         [HttpGet("{id}")]
         public IActionResult GetTaskByID(int id)
         {
@@ -32,7 +37,9 @@ namespace ToDo_API.Controllers
             }
             return Ok(user);
         }
+        #endregion
 
+        #region GetTaskByUserID
         [HttpGet("by-user/{userid}")]
         /*[Route("userid")]*/
        
@@ -45,7 +52,9 @@ namespace ToDo_API.Controllers
             }
             return Ok(user);
         }
+        #endregion
 
+        #region AddTask
         [HttpPost]
         public IActionResult AddTask(TaskModel Task)
         {
@@ -60,10 +69,12 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
+        #region GetTaskByCategoryID
         [HttpGet("dd-by-user/{userid}")]
         /*[Route("userid")]*/
-        public IActionResult GetCatDDByUserID(int userid)
+        public IActionResult GetTaskDDByUserID(int userid)
         {
             var task = _TaskRepository.GetTaskDropDownByUser(userid);
             if (task == null)
@@ -72,8 +83,9 @@ namespace ToDo_API.Controllers
             }
             return Ok(task);
         }
+        #endregion
 
-
+        #region UpdateTask
         [HttpPut]
         public IActionResult UpdateTask(TaskModel Task)
         {
@@ -88,7 +100,9 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
+        #region DeleteTask
         [HttpDelete]
         public IActionResult DeleteTask(int TaskID)
         {
@@ -100,8 +114,7 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
-
-
+        #endregion
 
     }
 }

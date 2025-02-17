@@ -8,6 +8,7 @@ namespace ToDo_API.Middleware
 {
     public class JwtMiddleware
     {
+        #region Constructor Dependency Injection
         private readonly RequestDelegate _next;
         private readonly string _jwtSecret;
 
@@ -16,7 +17,9 @@ namespace ToDo_API.Middleware
             _next = next;
             _jwtSecret = configuration["Jwt:Key"];
         }
+        #endregion
 
+        #region Invoke
         public async Task Invoke(HttpContext context)
         {
             // Define public endpoints that do not require authentication
@@ -61,7 +64,9 @@ namespace ToDo_API.Middleware
 
             await _next(context); // Proceed to the next middleware
         }
+        #endregion
 
+        #region AttachUserToContext
         private void AttachUserToContext(HttpContext context, string token)
         {
             try
@@ -97,5 +102,6 @@ namespace ToDo_API.Middleware
                 throw new SecurityTokenException("Invalid token.");
             }
         }
+        #endregion
     }
 }

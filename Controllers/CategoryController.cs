@@ -9,19 +9,24 @@ namespace ToDo_API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
+        #region Constructor Dependency Injection
         private readonly CategoryRepository _CategoryRepository;
         public CategoryController(CategoryRepository categoryRepository)
         {
             this._CategoryRepository = categoryRepository;
         }
+        #endregion
 
+        #region GetAllCategory
         [HttpGet]
         public IActionResult GetAllCategory()
         {
             var category = _CategoryRepository.GetAllCategory();
             return Ok(category);
         }
+        #endregion
 
+        #region GetCategoryByID
         [HttpGet("{id}")]
         public IActionResult GetCategoryByID(int id)
         {
@@ -32,6 +37,11 @@ namespace ToDo_API.Controllers
             }
             return Ok(category);
         }
+        #endregion
+
+        #region GetToken
+
+        
         [HttpGet("jwtauth")]
         public IActionResult GetToken() {
             var userId = HttpContext.Items["UserId"];
@@ -50,7 +60,9 @@ namespace ToDo_API.Controllers
 
             return Ok(donor);
         }
+        #endregion
 
+        #region GetTaskByUserID
         [HttpGet("by-user/{userid}")]
         /*[Route("userid")]*/
         public IActionResult GetTaskByUserID(int userid)
@@ -62,6 +74,9 @@ namespace ToDo_API.Controllers
             }
             return Ok(category);
         }
+        #endregion
+
+        #region GetCatDDByUserID
         [HttpGet("dd-by-user/{userid}")]
         /*[Route("userid")]*/
         public IActionResult GetCatDDByUserID(int userid)
@@ -73,8 +88,9 @@ namespace ToDo_API.Controllers
             }
             return Ok(category);
         }
+        #endregion
 
-
+        #region AddTask
         [HttpPost]
         public IActionResult AddTask(CategoryModel Category)
         {
@@ -89,7 +105,9 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
+        #region UpdateCategory
         [HttpPut]
         public IActionResult UpdateCategory(CategoryModel Category)
         {
@@ -104,7 +122,9 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
+        #region DeleteCategory
         [HttpDelete]
         public IActionResult DeleteCategory(int CategoryID)
         {
@@ -116,6 +136,6 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
-
+        #endregion
     }
 }

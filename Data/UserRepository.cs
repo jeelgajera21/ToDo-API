@@ -8,6 +8,7 @@ namespace ToDo_API.Data
 {
     public class UserRepository
     {
+        #region Constructor Dependency Injection
         private IConfiguration configuration;
         private readonly TokenService _tokenService;
 
@@ -16,6 +17,7 @@ namespace ToDo_API.Data
             configuration = _configuration;
             _tokenService = tokenService;
         }
+        #endregion
 
         #region GetAllUser
 

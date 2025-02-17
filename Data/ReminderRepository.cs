@@ -6,11 +6,14 @@ namespace ToDo_API.Data
 {
     public class ReminderRepository
     {
+        #region Constructor Dependency Injection
         private IConfiguration configuration;
         public ReminderRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
         }
+        #endregion
+
         #region GetAllReminder
         public List<ReminderModel> GetAllReminder()
         {

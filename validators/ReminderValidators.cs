@@ -4,6 +4,7 @@ using ToDo_API.Models;
 
 public class ReminderValidator : AbstractValidator<ReminderModel>
 {
+    #region Reminder Validations
     public ReminderValidator()
     {
         RuleFor(r => r.TaskID)
@@ -15,4 +16,5 @@ public class ReminderValidator : AbstractValidator<ReminderModel>
         RuleFor(r => r.IsSent)
             .NotNull().WithMessage("IsSent status is required.");
     }
+    #endregion
 }

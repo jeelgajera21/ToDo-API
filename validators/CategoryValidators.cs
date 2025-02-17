@@ -3,6 +3,7 @@ using ToDo_API.Models;
 
 public class CategoryValidator : AbstractValidator<CategoryModel>
 {
+    #region Category Validations
     public CategoryValidator()
     {
         RuleFor(c => c.UserID)
@@ -19,4 +20,5 @@ public class CategoryValidator : AbstractValidator<CategoryModel>
         RuleFor(c => c.CreatedAt)
             .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Created date cannot be in the future.");
     }
+    #endregion
 }

@@ -7,11 +7,14 @@ namespace ToDo_API.Data
 {
     public class TaskRepository
     {
+        #region Constructor Dependency Injection
         private IConfiguration configuration;
         public TaskRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
         }
+        #endregion
+
         #region GetAllTask
         public List<TaskModel> GetAllTasks()
         {

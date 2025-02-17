@@ -7,6 +7,7 @@ namespace ToDo_API.Services
 {
     public class TokenService
     {
+        #region Constructor Dependency Injection
         private readonly string _key;
         private readonly string _issuer;
 
@@ -15,7 +16,9 @@ namespace ToDo_API.Services
             _key = configuration["Jwt:Key"];
             _issuer = configuration["Jwt:Issuer"];
         }
+        #endregion
 
+        #region GenerateToken
         public string GenerateToken(int userId)
         {
             // Ensure the key length is sufficient
@@ -43,6 +46,7 @@ namespace ToDo_API.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        #endregion
 
     }
 }

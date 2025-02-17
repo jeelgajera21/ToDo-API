@@ -5,6 +5,7 @@ using ToDo_API.Models;
 
 public class TaskValidator : AbstractValidator<TaskModel>
 {
+    #region Task Validations
     public TaskValidator()
     {
         RuleFor(t => t.UserID)
@@ -37,4 +38,5 @@ public class TaskValidator : AbstractValidator<TaskModel>
         RuleFor(t => t.UpdatedAt)
             .GreaterThanOrEqualTo(t => t.CreatedAt).WithMessage("Updated date cannot be before the created date.");
     }
+    #endregion
 }

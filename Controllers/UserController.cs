@@ -9,20 +9,24 @@ namespace ToDo_API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        #region Constructor Dependency Injection
         private readonly UserRepository _UserRepository;
         public UserController(UserRepository userRepository)
         {
             this._UserRepository = userRepository;
         }
+        #endregion
 
-
+        #region GetAllUser
         [HttpGet]
         public IActionResult GetAllUser()
         {
             var user = _UserRepository.GetAllUser();
             return Ok(user);
         }
+        #endregion
 
+        #region GetUserByID
         [HttpGet("{id}")]
         public IActionResult GetUserByID(int id)
         {
@@ -33,7 +37,9 @@ namespace ToDo_API.Controllers
             }
             return Ok(user);
         }
+        #endregion
 
+        #region AddUser
         [HttpPost]
         [Route("register")]
         public IActionResult AddUser(UserModel User)
@@ -49,8 +55,9 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
-
+        #region Login
         [HttpPost("login")]
         public IActionResult Login(UserLoginRequest request)
         {
@@ -62,9 +69,9 @@ namespace ToDo_API.Controllers
 
             return Ok(user);
         }
+        #endregion
 
-
-
+        #region UpdateUser
         [HttpPut]
         public IActionResult UpdateUser(UserModel User)
         {
@@ -79,7 +86,9 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
+        #region UserActive
         [HttpPut("active")]
         public IActionResult UserActive(int UserID)
         {
@@ -94,7 +103,9 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
+        #region UserInActive
         [HttpPut("inactive")]
         public IActionResult UserInActive(int UserID)
         {
@@ -109,9 +120,9 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
-
-
+        #region DeleteUser
         [HttpDelete]
         public IActionResult DeleteUser(int UserID)
         {
@@ -123,10 +134,7 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
-
-        
-    
-
-}
+    }
 }

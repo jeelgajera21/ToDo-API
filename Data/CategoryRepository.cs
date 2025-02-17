@@ -7,11 +7,13 @@ namespace ToDo_API.Data
 {
     public class CategoryRepository
     {
+        #region Constructor Dependency Injection
         private IConfiguration configuration;
         public CategoryRepository(IConfiguration _configuration)
         {
             configuration = _configuration;
         }
+        #endregion
 
         #region GetAllCategory
         public List<CategoryModel> GetAllCategory()

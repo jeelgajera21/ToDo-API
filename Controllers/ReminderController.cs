@@ -9,19 +9,24 @@ namespace ToDo_API.Controllers
     [ApiController]
     public class ReminderController : ControllerBase
     {
+        #region Constructor Dependency Injection
         private readonly ReminderRepository _ReminderRepository;
         public ReminderController(ReminderRepository reminderRepository)
         {
             this._ReminderRepository = reminderRepository;
         }
+        #endregion
 
+        #region GetAllReminder
         [HttpGet]
         public IActionResult GetAllReminder()
         {
             var reminder = _ReminderRepository.GetAllReminder();
             return Ok(reminder);
         }
+        #endregion
 
+        #region GetReminderByID
         [HttpGet("{id}")]
         public IActionResult GetReminderByID(int id)
         {
@@ -32,7 +37,9 @@ namespace ToDo_API.Controllers
             }
             return Ok(reminder);
         }
+        #endregion
 
+        #region GetReminderByTaskID
         [HttpGet("by-task/{taskid}")]
         /*[Route("userid")]*/
 
@@ -45,6 +52,9 @@ namespace ToDo_API.Controllers
             }
             return Ok(reminder);
         }
+        #endregion
+
+        #region GetReminderByUserID
         [HttpGet("by-user/{userid}")]
         /*[Route("userid")]*/
 
@@ -57,8 +67,9 @@ namespace ToDo_API.Controllers
             }
             return Ok(reminder);
         }
+        #endregion
 
-
+        #region AddReminder
         [HttpPost]
         public IActionResult AddReminder(ReminderModel Reminder)
         {
@@ -73,7 +84,9 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
+        #region UpdateReminder
         [HttpPut]
         public IActionResult UpdateReminder(ReminderModel Reminder)
         {
@@ -88,7 +101,9 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
+        #region DeleteReminder
         [HttpDelete]
         public IActionResult DeleteReminder(int ReminderID)
         {
@@ -100,7 +115,9 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
+        #region ReminderSent
         [HttpPut("sent")]
         public IActionResult ReminderSent(int ReminderID)
         {
@@ -115,6 +132,7 @@ namespace ToDo_API.Controllers
             }
             return StatusCode(500);
         }
+        #endregion
 
 
     }

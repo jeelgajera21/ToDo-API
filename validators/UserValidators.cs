@@ -4,6 +4,7 @@ using ToDo_API.Models;
 
 public class UserValidator : AbstractValidator<UserModel>
 {
+    #region User Validations
     public UserValidator()
     {
         RuleFor(u => u.UserName)
@@ -29,4 +30,5 @@ public class UserValidator : AbstractValidator<UserModel>
         RuleFor(u => u.IsActive)
             .NotNull().WithMessage("IsActive status is required.");
     }
+    #endregion
 }
