@@ -59,7 +59,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Validate JWT token on every request
-//app.UseMiddleware<JwtMiddleware>();
+app.UseMiddleware<JwtMiddleware>();
 
 app.UseHttpsRedirection();
 
