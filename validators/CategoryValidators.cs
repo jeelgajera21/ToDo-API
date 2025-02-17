@@ -13,6 +13,7 @@ public class CategoryValidator : AbstractValidator<CategoryModel>
             .MaximumLength(100).WithMessage("Category name cannot exceed 100 characters.");
 
         RuleFor(c => c.Description)
+            .NotEmpty().WithMessage("Please add description.")
             .MaximumLength(500).WithMessage("Description cannot exceed 500 characters.");
 
         RuleFor(c => c.CreatedAt)

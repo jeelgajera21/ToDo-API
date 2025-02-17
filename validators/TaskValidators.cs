@@ -21,15 +21,15 @@ public class TaskValidator : AbstractValidator<TaskModel>
             .GreaterThanOrEqualTo(DateTime.UtcNow).WithMessage("Due date must be in the future or today.");
 
         RuleFor(t => t.Priority)
-            .InclusiveBetween(1, 5).WithMessage("Priority must be between 1 (Low) and 5 (High).");
+            .InclusiveBetween(1, 3).WithMessage("Priority must be between 1 (HIGH) and 3 (LOW).");
 
         RuleFor(t => t.Status)
             .NotEmpty().WithMessage("Status is required.")
-            .Must(status => new[] { "Pending", "In Progress", "Completed", "Canceled" }.Contains(status))
-            .WithMessage("Status must be 'Pending', 'In Progress', 'Completed', or 'Canceled'.");
+            .Must(status => new[] { "Pending", "In Progress", "Completed" }.Contains(status))
+            .WithMessage("Status must be 'Pending', 'In Progress',or 'Completed'");
 
         RuleFor(t => t.CategoryID)
-            .GreaterThan(0).WithMessage("CategoryID must be greater than 0.");
+            .GreaterThan(0).WithMessage("Must select one of the category name.");
 
         RuleFor(t => t.CreatedAt)
             .LessThanOrEqualTo(DateTime.UtcNow).WithMessage("Created date cannot be in the future.");

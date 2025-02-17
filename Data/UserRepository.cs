@@ -1,15 +1,20 @@
 ﻿using ToDo_API.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
+using System.Drawing;
+using ToDo_API.Services;
 
 namespace ToDo_API.Data
 {
     public class UserRepository
     {
         private IConfiguration configuration;
-        public UserRepository(IConfiguration _configuration)
+        private readonly TokenService _tokenService;
+
+        public UserRepository(IConfiguration _configuration, TokenService tokenService)
         {
             configuration = _configuration;
+            _tokenService = tokenService;
         }
 
         #region GetAllUser
@@ -124,18 +129,23 @@ namespace ToDo_API.Data
             SqlDataReader reader = command.ExecuteReader();
             if (reader.Read())
             {
+            var token = _tokenService.GenerateToken(Convert.ToInt32(reader["UserID"]));
                 UserLogin = new UserLoginResponse
                 {
                     UserID = Convert.ToInt32(reader["UserID"]),
                     UserName = (reader["UserName"].ToString()),
                     Email = (reader["Email"].ToString()),
                     Name = (reader["Name"].ToString()),
-                    IsActive = Convert.ToBoolean(reader["IsActive"])
-
+                    IsActive = Convert.ToBoolean(reader["IsActive"]),
+                    Token = token,
+                    LoginStatus = true
 
                 };
             }
 
+            // Generate JWT token
+
+            
             return UserLogin;
         }
         #endregion

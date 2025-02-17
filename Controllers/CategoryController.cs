@@ -32,6 +32,24 @@ namespace ToDo_API.Controllers
             }
             return Ok(category);
         }
+        [HttpGet("jwtauth")]
+        public IActionResult GetToken() {
+            var userId = HttpContext.Items["UserId"];
+
+            if (userId == null)
+            {
+                Console.WriteLine("Unauthorized: Token validation failed or user not attached to context.");
+                return Unauthorized("Invalid or expired token.");
+            }
+
+            var donor = _CategoryRepository.GetCategoryByUserID((int)userId);
+            if (donor == null)
+            {
+                return NotFound("Donor not found.");
+            }
+
+            return Ok(donor);
+        }
 
         [HttpGet("by-user/{userid}")]
         /*[Route("userid")]*/
